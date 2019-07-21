@@ -25,18 +25,24 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="32dp"
             android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp">
+            android:layout_marginRight="16dp"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="24dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
 
-                <ImageView
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
                     android:id="@+id/ivDeliveryRImage"
-                    android:layout_width="124dp"
-                    android:layout_height="124dp"
-                    android:layout_margin="4dp" />
+                    android:layout_width="112dp"
+                    android:layout_height="112dp"
+                    android:layout_margin="4dp"
+                    app:civ_border_width="2dp"
+                    app:civ_border_color="@color/colorPrimaryDark"/>
 
                 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                     android:layout_width="match_parent"
@@ -44,28 +50,52 @@
                     android:orientation="vertical"
                     android:gravity="center">
 
-
-                    <TextView
-                        android:id="@+id/tvDeliveryDetails"
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingLeft="8dp"
-                        android:paddingRight="4dp"
-                        android:drawableLeft="@drawable/ic_info"
-                        android:drawablePadding="4dp"
-                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-                        android:text="Delivery Info"/>
+                        android:layout_marginBottom="4dp">
 
-                    <TextView
-                        android:id="@+id/tvDeliveryRAddress"
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            app:srcCompat="@drawable/ic_info"
+                            android:layout_marginRight="4dp"/>
+
+                        <TextView
+                            android:id="@+id/tvDeliveryDetails"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="8dp"
+                            android:paddingRight="4dp"
+                            android:drawablePadding="4dp"
+                            android:gravity="center_vertical"
+                            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                            android:text="Delivery Info"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:paddingLeft="8dp"
-                        android:paddingRight="4dp"
-                        android:drawableLeft="@drawable/ic_address"
-                        android:drawablePadding="4dp"
-                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-                        android:text="Delivery Address"/>
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            app:srcCompat="@drawable/ic_address"
+                            android:layout_marginRight="4dp" />
+
+                        <TextView
+                            android:id="@+id/tvDeliveryRAddress"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="8dp"
+                            android:paddingRight="4dp"
+                            android:drawablePadding="4dp"
+                            android:gravity="center_vertical"
+                            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                            android:text="Delivery Address"/>
+
+                    </LinearLayout>
 
 
 

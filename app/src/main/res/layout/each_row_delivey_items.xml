@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto">
@@ -17,11 +18,15 @@
             android:layout_height="match_parent"
             android:orientation="horizontal">
 
-            <ImageView
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/ivDeliveryImage"
-                android:layout_width="92dp"
-                android:layout_height="92dp"
-                android:layout_margin="4dp"/>
+                android:layout_margin="4dp"
+                android:layout_width="96dp"
+                android:layout_height="96dp"
+                app:civ_border_width="2dp"
+                app:civ_border_color="@color/colorPrimaryDark"/>
 
             <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
@@ -30,27 +35,52 @@
                 android:gravity="center">
 
 
-                <TextView
-                    android:id="@+id/tvDeliveryInfo"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingLeft="8dp"
-                    android:paddingRight="4dp"
-                    android:drawableLeft="@drawable/ic_info"
-                    android:drawablePadding="4dp"
-                    android:textSize="15sp"
-                    android:text="Delivery Info"/>
+                    android:layout_marginBottom="4dp">
 
-                <TextView
-                    android:id="@+id/tvDeliveryAddress"
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        app:srcCompat="@drawable/ic_info"
+                        android:layout_marginRight="4dp"/>
+
+                    <TextView
+                        android:id="@+id/tvDeliveryInfo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="8dp"
+                        android:paddingRight="4dp"
+                        android:drawablePadding="4dp"
+                        android:textSize="15sp"
+                        android:gravity="center_vertical"
+                        android:text="Delivery Info"/>
+
+                </LinearLayout>
+
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingLeft="8dp"
-                    android:paddingRight="4dp"
-                    android:drawableLeft="@drawable/ic_address"
-                    android:drawablePadding="4dp"
-                    android:textSize="15sp"
-                    android:text="Delivery Address"/>
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        app:srcCompat="@drawable/ic_address"
+                        android:layout_marginRight="4dp" />
+
+                    <TextView
+                            android:id="@+id/tvDeliveryAddress"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="8dp"
+                            android:paddingRight="4dp"
+                            android:drawablePadding="4dp"
+                            android:textSize="15sp"
+                        android:gravity="center_vertical"
+                            android:text="Delivery Address"/>
+
+                </LinearLayout>
 
 
 

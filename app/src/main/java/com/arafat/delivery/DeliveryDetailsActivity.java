@@ -12,6 +12,7 @@ import com.squareup.picasso.Picasso;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 import android.view.MenuItem;
 import android.widget.ImageView;
@@ -21,7 +22,7 @@ public class DeliveryDetailsActivity extends AppCompatActivity implements OnMapR
 
     private GoogleMap mMap;
 
-    ImageView ivDeliveryRImage;
+    CircleImageView ivDeliveryRImage;
     TextView tvDAddress, tvDDetails;
 
     String imUrl = "";
@@ -83,7 +84,7 @@ public class DeliveryDetailsActivity extends AppCompatActivity implements OnMapR
         // Add a marker in Sydney and move the camera
         LatLng DeliveryLocation = new LatLng(deliveryLat,deliveryLng);
         mMap.moveCamera(CameraUpdateFactory.newLatLng(DeliveryLocation));
-        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(DeliveryLocation, 15f), 1000, null);
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(DeliveryLocation, 16f), 1000, null);
         mMap.addMarker(new MarkerOptions().position(DeliveryLocation).title("Delivery Location"));
 
         tvDDetails.setText(DeliveryDetails);

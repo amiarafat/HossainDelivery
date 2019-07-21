@@ -3,6 +3,8 @@ package com.arafat.delivery.adapters;
 import android.content.Context;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+import de.hdodenhof.circleimageview.CircleImageView;
+
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -61,7 +63,7 @@ public class DeliveryListAdapter extends RecyclerView.Adapter<DeliveryListAdapte
     public class DeliveryListViewHolder extends RecyclerView.ViewHolder {
         private final TextView tvDeliveryInfo;
         private final TextView tvDeliveryAddress;
-        private final ImageView ivDeliveryPerson;
+        private final CircleImageView ivDeliveryPerson;
 
         public DeliveryListViewHolder(@NonNull View itemView) {
             super(itemView);
