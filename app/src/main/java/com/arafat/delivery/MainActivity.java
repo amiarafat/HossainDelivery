@@ -11,13 +11,12 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 
+import com.android.volley.Cache;
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
-import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.arafat.delivery.adapters.DeliveryListAdapter;
 import com.arafat.delivery.apis.APIConstants;
 import com.arafat.delivery.helper.ClickListener;
@@ -28,6 +27,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
@@ -58,14 +58,16 @@ public class MainActivity extends AppCompatActivity {
 
         initView();
 
-        getDeliveryLists(offset,limit);
+        //getDeliveryLists(offset,limit);
+        getDataWithChaced(offset,limit);
 
+        // Recyclerview Touch Listener
         rvDeliveries.addOnItemTouchListener(new RecyclerTouchListener(MainActivity.this, rvDeliveries, new ClickListener() {
             @Override
             public void onClick(View view, int position) {
 
 
-                Intent in = new Intent(MainActivity.this,DeliveryDetailsActivity.class);
+                Intent in = new Intent(MainActivity.this, DeliveryDetailsActivity.class);
                 in.putExtra("-ImageUrl",deliveryArrayList.get(position).getDeliveryImageUrl());
                 in.putExtra("-deliveryDetails",deliveryArrayList.get(position).getDeliveryDescription());
                 in.putExtra("-deliveryAddress",deliveryArrayList.get(position).getDeliverylocationAddress());
@@ -79,6 +81,9 @@ public class MainActivity extends AppCompatActivity {
 
             }
         }));
+
+
+        //Check Scroll End of RecyclerView
         rvDeliveries.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
@@ -86,7 +91,8 @@ public class MainActivity extends AppCompatActivity {
 
                 if (!recyclerView.canScrollVertically(1)) {
 
-                    getDeliveryLists(offset,limit);
+                    //getDeliveryLists(offset,limit);
+                    getDataWithChaced(offset,limit);
 
                 }
             }
@@ -94,6 +100,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    //View Initialization
     private void initView() {
         rvDeliveries = findViewById(R.id.rvDeliveries);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
@@ -106,8 +113,41 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    //Chaching API Call
+    private void getDataWithChaced(int lOffSet,int lLimit){
+
+        Cache cache = HossainDeliveryApplication.getInstance().getRequestQueue().getCache();
+        Cache.Entry entry = cache.get(APIConstants.Deliveries.API_DELIVERY_LIST + "?offset="+lOffSet+"&limit="+lLimit);
+        if(entry != null){
+
+            Log.d("data:","Arafat2");
+
+            try {
+                String data = new String(entry.data ,"UTF-8");
+                parseDeliveryList(data);
+                pbLoading.setVisibility(View.GONE);
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+
+        } else {
+
+
+            getDeliveryLists(offset,limit);
+        }
+    }
+
+
+    /*private void setData(String response) {
+        Log.d("data:",response);
+        parseDeliveryList(response);
+    }*/
+
+
+    //
     private void getDeliveryLists(int listOffset, int listLimit){
         pbLoading.setVisibility(View.VISIBLE);
+        Log.d("data:","Arafat4");
 
         StringRequest request =  new StringRequest(Request.Method.GET, APIConstants.Deliveries.API_DELIVERY_LIST + "?offset=" + listOffset + "&limit=" + listLimit, new Response.Listener<String>() {
             @Override
@@ -133,14 +173,22 @@ public class MainActivity extends AppCompatActivity {
             @Override
             protected Response<String> parseNetworkResponse(NetworkResponse response) {
                 mStatusCode = response.statusCode;
+
+                Log.d("st::",mStatusCode+"");
+                if(mStatusCode == 500){
+                    Log.d("er::",response.data.toString());
+
+                }
+
                 return super.parseNetworkResponse(response);
+
             }
         };
 
-         RequestQueue requestQueue = Volley.newRequestQueue(MainActivity.this);
+        /* RequestQueue requestQueue = Volley.newRequestQueue(MainActivity.this);
          requestQueue.add(request);
-
-        // HossainDelivery.getInstance().addToRequestQueue(request, TAG);
+*/
+         HossainDeliveryApplication.getInstance().addToRequestQueue(request);
     }
 
     private void parseDeliveryList(String response) {

@@ -1,9 +1,6 @@
 package com.arafat.delivery;
 
-import androidx.fragment.app.FragmentActivity;
 import android.os.Bundle;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -13,12 +10,19 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.squareup.picasso.Picasso;
 
-public class DeliveryDetailsActivity extends FragmentActivity implements OnMapReadyCallback {
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
+import android.view.MenuItem;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+public class DeliveryDetailsActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
 
     ImageView ivDeliveryRImage;
-    TextView  tvDAddress, tvDDetails;
+    TextView tvDAddress, tvDDetails;
 
     String imUrl = "";
     String DeliveryDetails = "";
@@ -33,10 +37,16 @@ public class DeliveryDetailsActivity extends FragmentActivity implements OnMapRe
         setContentView(R.layout.activity_delivery_details);
 
         initView();
+
         getDetailInfo();
     }
 
     private void initView() {
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar.setTitle(R.string.delivery_details);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -80,5 +90,17 @@ public class DeliveryDetailsActivity extends FragmentActivity implements OnMapRe
         tvDAddress.setText("at "+DeliveryAddress);
         Picasso.get().load(imUrl).into(ivDeliveryRImage);
 
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                break;
+            default:
+                break;
+        }
+        return true;
     }
 }
