@@ -5,6 +5,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.test.espresso.Espresso;
 import androidx.test.espresso.action.ViewActions;
 import androidx.test.espresso.contrib.RecyclerViewActions;
@@ -21,6 +22,9 @@ public class RecyclerViewTest {
 
     @Test
     public void recycleTest(){
+
+        Espresso.onView(ViewMatchers.withId(R.id.rvDeliveries))
+                .perform(RecyclerViewActions.scrollToPosition(19));
 
         Espresso.onView(ViewMatchers.withId(R.id.rvDeliveries))
                 .perform(RecyclerViewActions.actionOnItemAtPosition(0,click()));

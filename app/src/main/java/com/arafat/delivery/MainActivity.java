@@ -19,6 +19,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.arafat.delivery.adapters.DeliveryListAdapter;
 import com.arafat.delivery.apis.APIConstants;
+import com.arafat.delivery.constants.Constants;
 import com.arafat.delivery.helper.ClickListener;
 import com.arafat.delivery.helper.RecyclerTouchListener;
 import com.arafat.delivery.models.DeliveryItems;
@@ -32,7 +33,6 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-
     private static final String TAG = MainActivity.class.getSimpleName();
     private int offset = 0;
     private static int limit = 20;
@@ -43,8 +43,6 @@ public class MainActivity extends AppCompatActivity {
     //Progress Bar
     ProgressBar pbLoading;
 
-
-    //
     private DeliveryListAdapter deliveryAdapter;
     private ArrayList<DeliveryItems> deliveryArrayList = new ArrayList<>();
     private int mStatusCode=0;
@@ -66,13 +64,12 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view, int position) {
 
-
                 Intent in = new Intent(MainActivity.this, DeliveryDetailsActivity.class);
-                in.putExtra("-ImageUrl",deliveryArrayList.get(position).getDeliveryImageUrl());
-                in.putExtra("-deliveryDetails",deliveryArrayList.get(position).getDeliveryDescription());
-                in.putExtra("-deliveryAddress",deliveryArrayList.get(position).getDeliverylocationAddress());
-                in.putExtra("-deliveryLat",deliveryArrayList.get(position).getDeliverylocationLat());
-                in.putExtra("-deliveryLng",deliveryArrayList.get(position).getDeliverylocationLng());
+                in.putExtra(Constants.DELIVERYIMAGEURL,deliveryArrayList.get(position).getDeliveryImageUrl());
+                in.putExtra(Constants.DELIVERYDETAILS,deliveryArrayList.get(position).getDeliveryDescription());
+                in.putExtra(Constants.DELIVERYADDRESS,deliveryArrayList.get(position).getDeliverylocationAddress());
+                in.putExtra(Constants.DELIVERYLAT,deliveryArrayList.get(position).getDeliverylocationLat());
+                in.putExtra(Constants.DELIVERYLNG,deliveryArrayList.get(position).getDeliverylocationLng());
                 startActivity(in);
             }
 
@@ -102,6 +99,7 @@ public class MainActivity extends AppCompatActivity {
 
     //View Initialization
     private void initView() {
+
         rvDeliveries = findViewById(R.id.rvDeliveries);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         rvDeliveries.setLayoutManager(layoutManager);
@@ -110,6 +108,7 @@ public class MainActivity extends AppCompatActivity {
         rvDeliveries.setAdapter(deliveryAdapter);
 
         pbLoading = findViewById(R.id.pbLoading);
+
     }
 
 
@@ -120,7 +119,6 @@ public class MainActivity extends AppCompatActivity {
         Cache.Entry entry = cache.get(APIConstants.Deliveries.API_DELIVERY_LIST + "?offset="+lOffSet+"&limit="+lLimit);
         if(entry != null){
 
-            Log.d("data:","Arafat2");
 
             try {
                 String data = new String(entry.data ,"UTF-8");
@@ -137,17 +135,9 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
-    /*private void setData(String response) {
-        Log.d("data:",response);
-        parseDeliveryList(response);
-    }*/
-
-
-    //
+    // Getting Delivery List
     private void getDeliveryLists(int listOffset, int listLimit){
         pbLoading.setVisibility(View.VISIBLE);
-        Log.d("data:","Arafat4");
 
         StringRequest request =  new StringRequest(Request.Method.GET, APIConstants.Deliveries.API_DELIVERY_LIST + "?offset=" + listOffset + "&limit=" + listLimit, new Response.Listener<String>() {
             @Override
@@ -155,9 +145,7 @@ public class MainActivity extends AppCompatActivity {
 
                 pbLoading.setVisibility(View.GONE);
 
-                Log.d("status:",mStatusCode+"");
                 if(mStatusCode == 200){
-                    Log.d("res::",response);
                     parseDeliveryList(response);
                 }
 
@@ -174,10 +162,8 @@ public class MainActivity extends AppCompatActivity {
             protected Response<String> parseNetworkResponse(NetworkResponse response) {
                 mStatusCode = response.statusCode;
 
-                Log.d("st::",mStatusCode+"");
                 if(mStatusCode == 500){
                     Log.d("er::",response.data.toString());
-
                 }
 
                 return super.parseNetworkResponse(response);
@@ -185,9 +171,6 @@ public class MainActivity extends AppCompatActivity {
             }
         };
 
-        /* RequestQueue requestQueue = Volley.newRequestQueue(MainActivity.this);
-         requestQueue.add(request);
-*/
          HossainDeliveryApplication.getInstance().addToRequestQueue(request);
     }
 
@@ -216,8 +199,6 @@ public class MainActivity extends AppCompatActivity {
             }
 
             offset = deliveryArrayList.size();
-            Log.d("offset:",offset+"");
-
             deliveryAdapter.notifyDataSetChanged();
 
         } catch (JSONException e) {

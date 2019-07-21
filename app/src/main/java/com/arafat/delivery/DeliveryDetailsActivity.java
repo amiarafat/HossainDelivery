@@ -2,6 +2,7 @@ package com.arafat.delivery;
 
 import android.os.Bundle;
 
+import com.arafat.delivery.constants.Constants;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -15,7 +16,6 @@ import androidx.appcompat.widget.Toolbar;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 import android.view.MenuItem;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 public class DeliveryDetailsActivity extends AppCompatActivity implements OnMapReadyCallback {
@@ -25,11 +25,11 @@ public class DeliveryDetailsActivity extends AppCompatActivity implements OnMapR
     CircleImageView ivDeliveryRImage;
     TextView tvDAddress, tvDDetails;
 
-    String imUrl = "";
-    String DeliveryDetails = "";
-    String DeliveryAddress = "";
-    Double deliveryLat =0.0;
-    Double deliveryLng =0.0;
+    String imUrl ;
+    String DeliveryDetails ;
+    String DeliveryAddress ;
+    Double deliveryLat;
+    Double deliveryLng;
 
 
     @Override
@@ -65,13 +65,11 @@ public class DeliveryDetailsActivity extends AppCompatActivity implements OnMapR
 
         if(getIntent()!=null){
 
-            imUrl = getIntent().getStringExtra("-ImageUrl");
-            DeliveryDetails = getIntent().getStringExtra("-deliveryDetails");
-            DeliveryAddress = getIntent().getStringExtra("-deliveryAddress");
-
-            deliveryLat = getIntent().getDoubleExtra("-deliveryLat",0.0);
-            deliveryLng = getIntent().getDoubleExtra("-deliveryLng",0.0);
-
+            imUrl = getIntent().getStringExtra(Constants.DELIVERYIMAGEURL);
+            DeliveryDetails = getIntent().getStringExtra(Constants.DELIVERYDETAILS);
+            DeliveryAddress = getIntent().getStringExtra(Constants.DELIVERYADDRESS);
+            deliveryLat = getIntent().getDoubleExtra(Constants.DELIVERYLAT,0.0);
+            deliveryLng = getIntent().getDoubleExtra(Constants.DELIVERYLNG,0.0);
 
         }
     }
