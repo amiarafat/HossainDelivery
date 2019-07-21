@@ -2,6 +2,7 @@ package com.arafat.delivery.constants;
 
 public class Constants {
 
+    public static String DELIVVERYLOCATION = "Delivery Location";
     public static String DELIVERYIMAGEURL = "-ImageUrl";
     public static String DELIVERYDETAILS = "-deliveryDetails";
     public static String DELIVERYADDRESS = "-deliveryAddress";

@@ -83,7 +83,7 @@ public class DeliveryDetailsActivity extends AppCompatActivity implements OnMapR
         LatLng DeliveryLocation = new LatLng(deliveryLat,deliveryLng);
         mMap.moveCamera(CameraUpdateFactory.newLatLng(DeliveryLocation));
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(DeliveryLocation, 16f), 1000, null);
-        mMap.addMarker(new MarkerOptions().position(DeliveryLocation).title("Delivery Location"));
+        mMap.addMarker(new MarkerOptions().position(DeliveryLocation).title(Constants.DELIVVERYLOCATION));
 
         tvDDetails.setText(DeliveryDetails);
         tvDAddress.setText("at "+DeliveryAddress);
